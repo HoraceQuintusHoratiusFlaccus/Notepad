@@ -90,7 +90,7 @@ void MainWindow::CreateActions()
 {
     QMenu * FileMenu = menuBar() -> addMenu(tr("&File"));
     QToolBar * FileToolBar = addToolBar(tr("File"));
-    const QIcon NewIcon = QIcon::fromTheme("document-new", QIcon(":/images/new.png"));
+    const QIcon NewIcon = QIcon::fromTheme("document-new", QIcon("C:\\Notepad\\images\\icons8-new-file-64.png"));
     QAction * NewAct = new QAction(NewIcon, tr("&New"), this);
     NewAct -> setShortcuts(QKeySequence::New);
     NewAct -> setStatusTip(tr("Create a new file"));
@@ -98,7 +98,7 @@ void MainWindow::CreateActions()
     FileMenu -> addAction(NewAct);
     FileToolBar -> addAction(NewAct);
 
-    const QIcon OpenIcon = QIcon::fromTheme("document-open", QIcon(":/images/open.png"));
+    const QIcon OpenIcon = QIcon::fromTheme("document-open", QIcon("C:\\Notepad\\images\\icons8-view-details-64.png"));
     QAction * OpenAct = new QAction(OpenIcon, tr("&Open..."), this);
     OpenAct -> setShortcuts(QKeySequence::Open);
     OpenAct -> setStatusTip(tr("Open an existing file"));
@@ -106,7 +106,7 @@ void MainWindow::CreateActions()
     FileMenu -> addAction(OpenAct);
     FileToolBar -> addAction(OpenAct);
 
-    const QIcon SaveIcon = QIcon::fromTheme("document-save", QIcon(":/images/save.png"));
+    const QIcon SaveIcon = QIcon::fromTheme("document-save", QIcon("C:\\Notepad\\images\\icons8-save-64.png"));
     QAction * SaveAct = new QAction(SaveIcon, tr("&Save"), this);
     SaveAct -> setShortcuts(QKeySequence::Save);
     SaveAct -> setStatusTip(tr("Save the document to disk"));
@@ -130,7 +130,7 @@ void MainWindow::CreateActions()
     QToolBar * EditToolBar = addToolBar(tr("Edit"));
 
 #ifndef QT_NO_CLIPBOARD
-    const QIcon CutIcon = QIcon::fromTheme("edit-cut", QIcon(":/images/cut.png"));
+    const QIcon CutIcon = QIcon::fromTheme("edit-cut", QIcon("C:\\Notepad\\images\\icons8-cut-64.png"));
     QAction * CutAct = new QAction(CutIcon, tr("Cu&t"), this);
     CutAct -> setShortcuts(QKeySequence::Cut);
     CutAct -> setStatusTip(tr("Cut the current selection's contents to the clipboard"));
@@ -138,7 +138,7 @@ void MainWindow::CreateActions()
     EditMenu -> addAction(CutAct);
     EditToolBar->addAction(CutAct);
 
-    const QIcon CopyIcon = QIcon::fromTheme("edit-copy", QIcon(":/images/copy.png"));
+    const QIcon CopyIcon = QIcon::fromTheme("edit-copy", QIcon("C:\\Notepad\\images\\icons8-copy-64.png"));
     QAction * CopyAct = new QAction(CopyIcon, tr("&Copy"), this);
     CopyAct -> setShortcuts(QKeySequence::Copy);
     CopyAct -> setStatusTip(tr("Copy the current selection's contents to the clipboard"));
@@ -146,7 +146,7 @@ void MainWindow::CreateActions()
     EditMenu -> addAction(CopyAct);
     EditToolBar -> addAction(CopyAct);
 
-    const QIcon PasteIcon = QIcon::fromTheme("edit-paste", QIcon(":/images/paste.png"));
+    const QIcon PasteIcon = QIcon::fromTheme("edit-paste", QIcon("C:\\Notepad\\images\\icons8-paste-64.png"));
     QAction * PasteAct = new QAction(PasteIcon, tr("&Paste"), this);
     PasteAct -> setShortcuts(QKeySequence::Paste);
     PasteAct -> setStatusTip(tr("Paste the clipboard's contents into the current selection"));
@@ -289,3 +289,15 @@ QString MainWindow::StrippedName(const QString & FullFileName)
 {
     return QFileInfo(FullFileName).fileName();
 }
+
+#ifndef QT_NO_SESSIONMANAGER
+void MainWindow::CommitData(QSessionManager & Manager)
+{
+    if (Manager.allowsInteraction())
+        if (!MaybeSave())
+            Manager.cancel();
+    else
+        if (TextEdit -> document() -> isModified())
+            Save();
+}
+#endif
