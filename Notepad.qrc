@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/C:\Users\Cho Yeon Kim\Documents\Notepad">
+        <file>images/icons8-copy-64.png</file>
+        <file>images/icons8-cut-64.png</file>
+        <file>images/icons8-new-file-64.png</file>
+        <file>images/icons8-paste-64.png</file>
+        <file>images/icons8-save-64.png</file>
+        <file>images/icons8-view-details-64.png</file>
+    </qresource>
+</RCC>
